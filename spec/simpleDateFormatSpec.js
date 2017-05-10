@@ -110,4 +110,19 @@ describe("simple date format with default locale", function () {
     expect(new sdf.SimpleDateFormat("u").format(new Date(117, 4, 8))).toBe("1");
     expect(new sdf.SimpleDateFormat("u").format(new Date(117, 4, 7))).toBe("7");
   });
+
+  it("combines patterns", function() {
+    var d = new Date(101, 6, 4, 12, 8, 56);
+    //expect(new sdf.SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(d)).toBe("2001.07.04 AD at 12:08:56 PDT");
+    expect(new sdf.SimpleDateFormat("EEE, MMM d, ''yy").format(d)).toBe("Wed, Jul 4, '01");
+    //expect(new sdf.SimpleDateFormat("h:mm a").format(d)).toBe("12:08 PM");
+    //expect(new sdf.SimpleDateFormat("hh 'o''clock' a, zzzz").format(d)).toBe("12 o'clock PM, Pacific Daylight Time");
+    //expect(new sdf.SimpleDateFormat("K:mm a, z").format(d)).toBe("0:08 PM, PDT");
+    //expect(new sdf.SimpleDateFormat("yyyyy.MMMMM.dd GGG hh:mm aaa").format(d)).toBe("02001.July.04 AD 12:08 PM");
+    //expect(new sdf.SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(d)).toBe("Wed, 4 Jul 2001 12:08:56 -0700");
+    //expect(new sdf.SimpleDateFormat("yyMMddHHmmssZ").format(d)).toBe("010704120856-0700");
+    //expect(new sdf.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(d)).toBe("2001-07-04T12:08:56.235-0700");
+    //expect(new sdf.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").format(d)).toBe("2001-07-04T12:08:56.235-07:00");
+    expect(new sdf.SimpleDateFormat("YYYY-'W'ww-u").format(d)).toBe("2001-W27-3");
+  });
 });

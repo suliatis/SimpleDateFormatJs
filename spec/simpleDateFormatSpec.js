@@ -104,4 +104,10 @@ describe("simple date format with default locale", function () {
     expect(new sdf.SimpleDateFormat("EEE").format(d)).toBe("Wed");
     expect(new sdf.SimpleDateFormat("EEEE").format(d)).toBe("Wednesday");
   });
+
+  it("formats the day number in week", function() {
+    //first day of the week is always Monday, does not matter which locale you use
+    expect(new sdf.SimpleDateFormat("u").format(new Date(117, 4, 8))).toBe("1");
+    expect(new sdf.SimpleDateFormat("u").format(new Date(117, 4, 7))).toBe("7");
+  });
 });

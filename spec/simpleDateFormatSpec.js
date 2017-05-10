@@ -86,19 +86,19 @@ describe("simple date format with default locale", function () {
   });
 
   it("formats day in month", function() {
-    var d = new Date(17, 5, 5);
+    var d = new Date(117, 5, 5);
     expect(new sdf.SimpleDateFormat("d")).toBe("5");
     expect(new sdf.SimpleDateFormat("dd")).toBe("05");
   });
 
   it("formats the day of week in month", function() {
     //it is the second Wendesday in May
-    var d = new Date(17, 4, 10);
+    var d = new Date(117, 4, 10);
     expect(new sdf.SimpleDateFormat("F")).toBe("2");
   });
 
   it("formats the day name in week", function() {
-    var d = new Date(17, 4, 10);
+    var d = new Date(117, 4, 10);
     expect(new sdf.SimpleDateFormat("E").format(d)).toBe("Wed");
     expect(new sdf.SimpleDateFormat("EE").format(d)).toBe("Wed");
     expect(new sdf.SimpleDateFormat("EEE").format(d)).toBe("Wed");

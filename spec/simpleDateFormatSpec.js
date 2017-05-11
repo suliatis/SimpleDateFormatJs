@@ -13,7 +13,7 @@ describe("simple date format with default locale", function () {
   });
 
   it("formats year", function() {
-    var d = new Date(89, 11, 6);
+    var d = new Date(1989, 11, 6);
     expect(new sdf.SimpleDateFormat("y").format(d)).toBe("1989");
     expect(new sdf.SimpleDateFormat("yy").format(d)).toBe("89");
     expect(new sdf.SimpleDateFormat("yyy").format(d)).toBe("1989");
@@ -37,7 +37,7 @@ describe("simple date format with default locale", function () {
      * year is 1997.
      */
 
-    var d = new Date(97, 11, 28);
+    var d = new Date(1997, 11, 28);
     expect(new sdf.SimpleDateFormat("Y").format(d)).toBe("1998");
     expect(new sdf.SimpleDateFormat("YY").format(d)).toBe("98");
     expect(new sdf.SimpleDateFormat("YYY").format(d)).toBe("1998");
@@ -45,7 +45,7 @@ describe("simple date format with default locale", function () {
   });
   
   it("formats month in year (context sensitive)", function() {
-    var d = new Date(17, 5, 5);
+    var d = new Date(2017, 5, 5);
     expect(new sdf.SimpleDateFormat("M")).toBe("6");
     expect(new sdf.SimpleDateFormat("MM")).toBe("06");
     expect(new sdf.SimpleDateFormat("MMM")).toBe("Jul");
@@ -60,7 +60,7 @@ describe("simple date format with default locale", function () {
      * http://stackoverflow.com/questions/32840336/standalone-form-of-month-name-in-java-date-format
      */
 
-    var d = new Date(17, 5, 5);
+    var d = new Date(2017, 5, 5);
     expect(new sdf.SimpleDateFormat("L")).toBe("6");
     expect(new sdf.SimpleDateFormat("LL")).toBe("06");
     expect(new sdf.SimpleDateFormat("LLL")).toBe("Jul");
@@ -68,37 +68,37 @@ describe("simple date format with default locale", function () {
   });
 
   it("formats week in year", function() {
-    var d = new Date(97, 11, 28);
+    var d = new Date(1997, 11, 28);
     expect(new sdf.SimpleDateFormat("w").format(d)).toBe("1");
     expect(new sdf.SimpleDateFormat("ww").format(d)).toBe("01");
   });
 
   it("formats week in month", function() {
-    var d = new Date(97, 11, 28);
+    var d = new Date(1997, 11, 28);
     expect(new sdf.SimpleDateFormat("W").format(d)).toBe("5");
   });
 
   it("formats day in year", function() {
-    var d = new Date(97, 0, 3);
+    var d = new Date(1997, 0, 3);
     expect(new sdf.SimpleDateFormat("D").format(d)).toBe("3");
     expect(new sdf.SimpleDateFormat("DD").format(d)).toBe("03");
     expect(new sdf.SimpleDateFormat("DDD").format(d)).toBe("003");
   });
 
   it("formats day in month", function() {
-    var d = new Date(117, 5, 5);
+    var d = new Date(2017, 5, 5);
     expect(new sdf.SimpleDateFormat("d")).toBe("5");
     expect(new sdf.SimpleDateFormat("dd")).toBe("05");
   });
 
   it("formats the day of week in month", function() {
     //it is the second Wendesday in May
-    var d = new Date(117, 4, 10);
+    var d = new Date(2017, 4, 10);
     expect(new sdf.SimpleDateFormat("F")).toBe("2");
   });
 
   it("formats the day name in week", function() {
-    var d = new Date(117, 4, 10);
+    var d = new Date(2017, 4, 10);
     expect(new sdf.SimpleDateFormat("E").format(d)).toBe("Wed");
     expect(new sdf.SimpleDateFormat("EE").format(d)).toBe("Wed");
     expect(new sdf.SimpleDateFormat("EEE").format(d)).toBe("Wed");
@@ -107,12 +107,12 @@ describe("simple date format with default locale", function () {
 
   it("formats the day number in week", function() {
     //first day of the week is always Monday, does not matter which locale you use
-    expect(new sdf.SimpleDateFormat("u").format(new Date(117, 4, 8))).toBe("1");
-    expect(new sdf.SimpleDateFormat("u").format(new Date(117, 4, 7))).toBe("7");
+    expect(new sdf.SimpleDateFormat("u").format(new Date(2017, 4, 8))).toBe("1");
+    expect(new sdf.SimpleDateFormat("u").format(new Date(2017, 4, 7))).toBe("7");
   });
 
   it("combines patterns", function() {
-    var d = new Date(101, 6, 4, 12, 8, 56);
+    var d = new Date(2001, 6, 4, 12, 8, 56);
     expect(new sdf.SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(d)).toBe("2001.07.04 AD at 12:08:56 PDT");
     expect(new sdf.SimpleDateFormat("EEE, MMM d, ''yy").format(d)).toBe("Wed, Jul 4, '01");
     expect(new sdf.SimpleDateFormat("h:mm a").format(d)).toBe("12:08 PM");

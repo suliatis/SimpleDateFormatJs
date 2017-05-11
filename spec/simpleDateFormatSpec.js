@@ -46,10 +46,10 @@ describe("simple date format with default locale", function () {
   
   it("formats month in year (context sensitive)", function() {
     var d = new Date(2017, 5, 5);
-    expect(new sdf.SimpleDateFormat("M")).toBe("6");
-    expect(new sdf.SimpleDateFormat("MM")).toBe("06");
-    expect(new sdf.SimpleDateFormat("MMM")).toBe("Jul");
-    expect(new sdf.SimpleDateFormat("MMMM")).toBe("July");
+    expect(new sdf.SimpleDateFormat("M").format(d)).toBe("6");
+    expect(new sdf.SimpleDateFormat("MM").format(d)).toBe("06");
+    expect(new sdf.SimpleDateFormat("MMM").format(d)).toBe("Jul");
+    expect(new sdf.SimpleDateFormat("MMMM").format(d)).toBe("July");
   });
 
   it("formats month in year (standalone form)", function() {
@@ -61,10 +61,10 @@ describe("simple date format with default locale", function () {
      */
 
     var d = new Date(2017, 5, 5);
-    expect(new sdf.SimpleDateFormat("L")).toBe("6");
-    expect(new sdf.SimpleDateFormat("LL")).toBe("06");
-    expect(new sdf.SimpleDateFormat("LLL")).toBe("Jul");
-    expect(new sdf.SimpleDateFormat("LLLL")).toBe("July");
+    expect(new sdf.SimpleDateFormat("L").format(d)).toBe("6");
+    expect(new sdf.SimpleDateFormat("LL").format(d)).toBe("06");
+    expect(new sdf.SimpleDateFormat("LLL").format(d)).toBe("Jul");
+    expect(new sdf.SimpleDateFormat("LLLL").format(d)).toBe("July");
   });
 
   it("formats week in year", function() {
@@ -87,14 +87,14 @@ describe("simple date format with default locale", function () {
 
   it("formats day in month", function() {
     var d = new Date(2017, 5, 5);
-    expect(new sdf.SimpleDateFormat("d")).toBe("5");
-    expect(new sdf.SimpleDateFormat("dd")).toBe("05");
+    expect(new sdf.SimpleDateFormat("d").format(d)).toBe("5");
+    expect(new sdf.SimpleDateFormat("dd").format(d)).toBe("05");
   });
 
   it("formats the day of week in month", function() {
     //it is the second Wendesday in May
     var d = new Date(2017, 4, 10);
-    expect(new sdf.SimpleDateFormat("F")).toBe("2");
+    expect(new sdf.SimpleDateFormat("F").format(d)).toBe("2");
   });
 
   it("formats the day name in week", function() {

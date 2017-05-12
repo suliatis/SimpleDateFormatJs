@@ -13,19 +13,33 @@ var SimpleDateFormat = function(pattern) {
 };
 
 SimpleDateFormat.prototype.format = function(date) {
+  var formattedString = "";
   var d = moment(date);
   var p = this.pattern;
   var matches;
   while((matches = this.regex.exec(p))) {
+    var quotedString = matches[1];
     var subPattern = matches[2];
+    var nonPatternLetters = matches[3];
+    var otherCharacters = matches[4];
 
-    if (subPattern) {
-      return this._formatField(this._fieldWithType(d, subPattern[0], subPattern.length));
+    if (quotedString) {
+			if (quotedString == "''") {
+			  formattedString += "'";
+			} else {
+			  formattedString += quotedString.substring(1, quotedString.length - 1);
+			}
+		} else if (nonPatternLetters) {
+      // swallow non pattern letters
+    } else if (otherCharacters) {
+      formattedString += otherCharacters;
+    } else if (subPattern) {
+      formattedString += this._formatField(this._fieldWithType(d, subPattern[0], subPattern.length));
     }
 
     p = p.substr(matches.index + matches[0].length);
   } 
-  return "";
+  return formattedString;
 }
 
 moment.prototype.weekInMonth = function() {

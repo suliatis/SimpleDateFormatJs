@@ -78,7 +78,7 @@ SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
     case "u":
       return this._asNumber(d.isoWeekday(), length);
   }
-  return "";
+  throw "Unexpected pattern letter: " + letter;
 }
 
 SimpleDateFormat.prototype._asText = function(v) {
@@ -111,7 +111,7 @@ SimpleDateFormat.prototype._formatField = function(field) {
     case this.TYPES.TEXT: 
       return field.value;
   }
-  return "";
+  throw "Unexpected field type: " + field.type;
 }
 
 SimpleDateFormat.prototype._padWithZeroes = function(str, length) {

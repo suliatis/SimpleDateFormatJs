@@ -28,6 +28,28 @@ SimpleDateFormat.prototype.format = function(date) {
   return "";
 }
 
+moment.prototype.weekInMonth = function() {
+  var first = moment(this).startOf("month").week();
+  var current = this.week();
+  if (first > current) first = first - moment(this).startOf("month").weeksInYear();
+  return current - first + 1;
+}
+
+moment.prototype.dayOfWeekInMonth = function() {
+  var c = 1;
+  var m = moment(this);
+  while ((m = moment(m).date(m.date() - 7)).month() === this.month()) c++;
+  return c;
+}
+
+moment.prototype.dayNameInWeek = function() {
+  return moment.weekdays()[this.weekday()];
+}
+
+moment.prototype.shortDayNameInWeek = function() {
+  return moment.weekdaysShort()[this.weekday()];
+}
+
 SimpleDateFormat.prototype._getRawFormatData = function(d, letter, length) {
   switch (letter) {
     case "G":
@@ -43,15 +65,16 @@ SimpleDateFormat.prototype._getRawFormatData = function(d, letter, length) {
     case "w":
       return this._asNumber(d.week(), length);
     case "W": 
-      return this._asNumber(this._getWeekInMonth(d), length);
+      return this._asNumber(d.weekInMonth(), length);
     case "D":
       return this._asNumber(d.dayOfYear(), length);
     case "d":
       return this._asNumber(d.date(), length);
     case "F":
-      return this._asNumber(this._getDayOfWeekInMonth(d), length);
+      return this._asNumber(d.dayOfWeekInMonth(), length);
     case "E":
-      return this._asText(this._getWeekdayName(d, length));
+      if (length <= 3) return this._asText(d.shortDayNameInWeek());
+      else return this._asText(d.dayNameInWeek());
     case "u":
       return this._asNumber(d.isoWeekday(), length);
   }
@@ -72,20 +95,6 @@ SimpleDateFormat.prototype._asMonth = function(v, l) {
 
 SimpleDateFormat.prototype._asYear = function(v, l) {
   return { value: v, length: l, type: this.TYPES.YEAR };
-}
-
-SimpleDateFormat.prototype._getWeekInMonth = function(d) {
-  var first = moment(d).startOf("month").week();
-  var current = d.week();
-  if (first > current) first = first - moment(d).startOf("month").weeksInYear();
-  return current - first + 1;
-}
-
-SimpleDateFormat.prototype._getDayOfWeekInMonth = function(d) {
-   var c = 1;
-   var m = moment(d);
-   while ((m = moment(m).date(m.date() - 7)).month() === d.month()) c++;
-   return c;
 }
 
 SimpleDateFormat.prototype._getWeekdayName = function(d, length) {

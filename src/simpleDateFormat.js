@@ -20,7 +20,7 @@ SimpleDateFormat.prototype.format = function(date) {
     var subPattern = matches[2];
 
     if (subPattern) {
-      return this._format(this._getRawFormatData(d, subPattern[0], subPattern.length));
+      return this._formatField(this._fieldWithType(d, subPattern[0], subPattern.length));
     }
 
     p = p.substr(matches.index + matches[0].length);
@@ -50,7 +50,7 @@ moment.prototype.shortDayNameInWeek = function() {
   return moment.weekdaysShort()[this.weekday()];
 }
 
-SimpleDateFormat.prototype._getRawFormatData = function(d, letter, length) {
+SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
   switch (letter) {
     case "G":
       return this._asText("AD");
@@ -97,24 +97,19 @@ SimpleDateFormat.prototype._asYear = function(v, l) {
   return { value: v, length: l, type: this.TYPES.YEAR };
 }
 
-SimpleDateFormat.prototype._getWeekdayName = function(d, length) {
-  if (length <= 3) return moment.weekdaysShort()[d.weekday()];
-  else return moment.weekdays()[d.weekday()];
-}
-
-SimpleDateFormat.prototype._format = function(rawData) {
-  switch (rawData.type) {
+SimpleDateFormat.prototype._formatField = function(field) {
+  switch (field.type) {
     case this.TYPES.YEAR:
-      if (rawData.length === 2) return ("" + rawData.value).substr(2);
-      else return this._padWithZeroes("" + rawData.value, rawData.length);
+      if (field.length === 2) return ("" + field.value).substr(2);
+      else return this._padWithZeroes("" + field.value, field.length);
     case this.TYPES.MONTH:
-      if (rawData.length <= 2) return this._padWithZeroes("" + (rawData.value + 1), rawData.length);
-      else if (rawData.length === 3) return moment.monthsShort()[rawData.value];
-      else return moment.months()[rawData.value];
+      if (field.length <= 2) return this._padWithZeroes("" + (field.value + 1), field.length);
+      else if (field.length === 3) return moment.monthsShort()[field.value];
+      else return moment.months()[field.value];
     case this.TYPES.NUMBER:
-      return this._padWithZeroes("" + rawData.value, rawData.length);
+      return this._padWithZeroes("" + field.value, field.length);
     case this.TYPES.TEXT: 
-      return rawData.value;
+      return field.value;
   }
   return "";
 }

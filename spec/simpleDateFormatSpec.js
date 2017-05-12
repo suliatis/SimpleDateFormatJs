@@ -48,8 +48,8 @@ describe("simple date format with default locale", function () {
     var d = new Date(2017, 5, 5);
     expect(new sdf.SimpleDateFormat("M").format(d)).toBe("6");
     expect(new sdf.SimpleDateFormat("MM").format(d)).toBe("06");
-    expect(new sdf.SimpleDateFormat("MMM").format(d)).toBe("Jul");
-    expect(new sdf.SimpleDateFormat("MMMM").format(d)).toBe("July");
+    expect(new sdf.SimpleDateFormat("MMM").format(d)).toBe("Jun");
+    expect(new sdf.SimpleDateFormat("MMMM").format(d)).toBe("June");
   });
 
   it("formats month in year (standalone form)", function() {
@@ -63,8 +63,8 @@ describe("simple date format with default locale", function () {
     var d = new Date(2017, 5, 5);
     expect(new sdf.SimpleDateFormat("L").format(d)).toBe("6");
     expect(new sdf.SimpleDateFormat("LL").format(d)).toBe("06");
-    expect(new sdf.SimpleDateFormat("LLL").format(d)).toBe("Jul");
-    expect(new sdf.SimpleDateFormat("LLLL").format(d)).toBe("July");
+    expect(new sdf.SimpleDateFormat("LLL").format(d)).toBe("Jun");
+    expect(new sdf.SimpleDateFormat("LLLL").format(d)).toBe("June");
   });
 
   it("formats week in year", function() {

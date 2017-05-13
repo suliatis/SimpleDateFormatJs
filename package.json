@@ -1,7 +1,7 @@
 {
   "name": "simple-date-format-js",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "SimpleDateFormat for JavaScript",
   "scripts": {
     "test": "./node_modules/.bin/jasmine-node spec"
   },

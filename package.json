@@ -8,7 +8,9 @@
   "author": "Attila Süli",
   "license": "ISC",
   "dependencies": {
-    "jasmine-node": "^1.14.5",
     "moment": "^2.18.1"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
   }
 }

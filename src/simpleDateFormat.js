@@ -42,26 +42,26 @@ SimpleDateFormat.prototype.format = function(date) {
   return formattedString;
 }
 
-moment.prototype.weekInMonth = function() {
-  var first = moment(this).startOf("month").week();
-  var current = this.week();
-  if (first > current) first = first - moment(this).startOf("month").weeksInYear();
+SimpleDateFormat.prototype.weekInMonth = function(d) {
+  var first = moment(d).startOf("month").week();
+  var current = d.week();
+  if (first > current) first = first - moment(d).startOf("month").weeksInYear();
   return current - first + 1;
 }
 
-moment.prototype.dayOfWeekInMonth = function() {
+SimpleDateFormat.prototype.dayOfWeekInMonth = function(d) {
   var c = 1;
-  var m = moment(this);
-  while ((m = moment(m).date(m.date() - 7)).month() === this.month()) c++;
+  var m = moment(d);
+  while ((m = moment(m).date(m.date() - 7)).month() === d.month()) c++;
   return c;
 }
 
-moment.prototype.dayNameInWeek = function() {
-  return moment.weekdays()[this.weekday()];
+SimpleDateFormat.prototype.dayNameInWeek = function(d) {
+  return moment.weekdays()[d.weekday()];
 }
 
-moment.prototype.shortDayNameInWeek = function() {
-  return moment.weekdaysShort()[this.weekday()];
+SimpleDateFormat.prototype.shortDayNameInWeek = function(d) {
+  return moment.weekdaysShort()[d.weekday()];
 }
 
 SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
@@ -79,16 +79,16 @@ SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
     case "w":
       return this._asNumber(d.week(), length);
     case "W": 
-      return this._asNumber(d.weekInMonth(), length);
+      return this._asNumber(this.weekInMonth(d), length);
     case "D":
       return this._asNumber(d.dayOfYear(), length);
     case "d":
       return this._asNumber(d.date(), length);
     case "F":
-      return this._asNumber(d.dayOfWeekInMonth(), length);
+      return this._asNumber(this.dayOfWeekInMonth(d), length);
     case "E":
-      if (length <= 3) return this._asText(d.shortDayNameInWeek());
-      else return this._asText(d.dayNameInWeek());
+      if (length <= 3) return this._asText(this.shortDayNameInWeek(d));
+      else return this._asText(this.dayNameInWeek(d));
     case "u":
       return this._asNumber(d.isoWeekday(), length);
   }

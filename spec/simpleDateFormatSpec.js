@@ -1,6 +1,17 @@
 var sdf = require("../src/simpleDateFormat.js");
 var moment = require("moment");
 
+describe("simple date format with default pattern", function() {
+  it("formats with ISO pattern", function() {
+    /*
+     * It's not identical with Java's `SimpleDateFormat` behavior because it's
+     * uses the default format defined in locale. Currently I'm not sure how to
+     * solve this problem.
+     */
+    expect(new sdf.SimpleDateFormat().format(moment([1999, 11, 1]))).toBe("1999-12-01");
+  });
+});
+
 describe("simple date format with default locale", function () {
   /* 
    * All the tests below assumes the SimpleDateFormat's default locale is 

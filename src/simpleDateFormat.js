@@ -1,7 +1,8 @@
 var moment = require('moment');
 
 var SimpleDateFormat = function(pattern) {
-  this.pattern = pattern;
+  if (pattern) this.pattern = pattern;
+  else this.pattern = "y-MM-dd";
   this.regex = /('[^']*')|(G+|y+|Y+|M+|L+|w+|W+|D+|d+|F+|E+|u+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
   
   this.TYPES = {

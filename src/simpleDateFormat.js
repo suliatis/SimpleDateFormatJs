@@ -13,6 +13,11 @@ var SimpleDateFormat = function(pattern) {
   };
 };
 
+SimpleDateFormat.prototype.applyPattern = function(pattern) {
+  if (!pattern) throw "Pattern must be defined!";
+  this.pattern = pattern;
+}
+
 SimpleDateFormat.prototype.format = function(date) {
   var formattedString = "";
   var d = moment(date);

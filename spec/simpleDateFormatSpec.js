@@ -10,6 +10,14 @@ describe("simple date format with default pattern", function() {
      */
     expect(new sdf.SimpleDateFormat().format(moment([1999, 11, 1]))).toBe("1999-12-01");
   });
+
+  it("applies the given pattern to this date format", function() {
+    var formatter = new sdf.SimpleDateFormat();
+    var d = moment([1999, 11, 1]);
+    expect(formatter.format(d)).toBe("1999-12-01");
+    formatter.applyPattern("MM/dd/yy");
+    expect(formatter.format(d)).toBe("12/01/99");
+  });
 });
 
 describe("simple date format with default locale", function () {

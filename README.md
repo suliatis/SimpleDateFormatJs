@@ -25,11 +25,25 @@ To read more about the patterns, please visit the offical documentation of [`Sim
 
 ## Examples
 
+If no pattern defined in constructor it uses ISO date pattern. **Warning**: it is not identical the original behavior and it is just a temporary solution.
+
+```javascript
+new SimpleDateFormat().format(new Date(2017, 4, 18)); //it prints 2017-05-18
+```
+
+You can apply a new pattern on existing date formatters.
+
+```javascript
+var formatter = new SimpleDateFormat();
+formatter.applyPattern("MM/dd/yy");
+formatter.format(new Date(2017, 4, 18)); //it prints 05/18/17
+```
+
 It supports both native `Date` and `moment.js`.
 
 ```javascript
-new SimpleDateFormat("y-MM-dd").format(new Date(2017, 4, 13)); //it prints: 2017-05-13
-new SimpleDateFormat("y-MM-dd").format(moment([2017, 4, 13])); //same output
+new SimpleDateFormat("MM/dd/yy").format(new Date(2017, 4, 13)); //it prints: 05/13/17
+new SimpleDateFormat("MM/dd/yy").format(moment([2017, 4, 13])); //same output
 ```
 
 For more examples check out the tests in [`spec`](./spec) folder.

@@ -131,6 +131,11 @@ describe("simple date format with default locale", function () {
     expect(new sdf.SimpleDateFormat("u").format(moment([2017, 4, 7]))).toBe("7");
   });
 
+  it("formats the am/pm markers", function() {
+    expect(new sdf.SimpleDateFormat("a").format(moment([2017, 4, 20, 16, 30, 0, 0]))).toBe("PM");
+    expect(new sdf.SimpleDateFormat("a").format(moment([2017, 4, 20, 10, 30, 0, 0]))).toBe("AM");
+  });
+
   it("combines patterns", function() {
     var d = moment([2001, 6, 4, 12, 8, 56]);
     expect(new sdf.SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(d)).toBe("2001.07.04 AD at 12:08:56 PDT");

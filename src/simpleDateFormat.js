@@ -3,7 +3,7 @@ var moment = require('moment');
 var SimpleDateFormat = function(pattern) {
   if (pattern) this.pattern = pattern;
   else this.pattern = "y-MM-dd";
-  this.regex = /('[^']*')|(G+|y+|Y+|M+|L+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
+  this.regex = /('.*')|(G+|y+|Y+|M+|L+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
   
   this.TYPES = {
     TEXT: "TEXT",
@@ -30,11 +30,7 @@ SimpleDateFormat.prototype.format = function(date) {
     var otherCharacters = matches[4];
 
     if (quotedString) {
-			if (quotedString == "''") {
-			  formattedString += "'";
-			} else {
-			  formattedString += quotedString.substring(1, quotedString.length - 1);
-			}
+			formattedString += quotedString.substring(1, quotedString.length - 1).replace("''", "'");
 		} else if (nonPatternLetters) {
       // swallow non pattern letters
     } else if (otherCharacters) {

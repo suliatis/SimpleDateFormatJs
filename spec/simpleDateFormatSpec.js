@@ -136,6 +136,15 @@ describe("simple date format with default locale", function () {
     expect(new sdf.SimpleDateFormat("a").format(moment([2017, 4, 20, 10, 30, 0, 0]))).toBe("AM");
   });
 
+  it("formats hours in day", function() {
+    expect(new sdf.SimpleDateFormat("H").format(moment([2017, 4, 20, 0, 0, 0, 0]))).toBe("0");
+    expect(new sdf.SimpleDateFormat("H").format(moment([2017, 4, 20, 23, 0, 0, 0]))).toBe("23");
+    expect(new sdf.SimpleDateFormat("k").format(moment([2017, 4, 20, 0, 0, 0, 0]))).toBe("24");
+    expect(new sdf.SimpleDateFormat("K").format(moment([2017, 4, 20, 0, 0, 0, 0]))).toBe("0");
+    expect(new sdf.SimpleDateFormat("K").format(moment([2017, 4, 20, 23, 0, 0, 0]))).toBe("11");
+    expect(new sdf.SimpleDateFormat("h").format(moment([2017, 4, 20, 0, 0, 0, 0]))).toBe("12");
+  }); 
+
   it("combines patterns", function() {
     var d = moment([2001, 6, 4, 12, 8, 56]);
     expect(new sdf.SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(d)).toBe("2001.07.04 AD at 12:08:56 PDT");

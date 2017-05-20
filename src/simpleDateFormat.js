@@ -3,7 +3,7 @@ var moment = require('moment');
 var SimpleDateFormat = function(pattern) {
   if (pattern) this.pattern = pattern;
   else this.pattern = "y-MM-dd";
-  this.regex = /('[^']*')|(G+|y+|Y+|M+|L+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
+  this.regex = /('[^']*')|(G+|y+|Y+|M+|L+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
   
   this.TYPES = {
     TEXT: "TEXT",
@@ -111,6 +111,8 @@ SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
       return this._asNumber(d.minutes(), length);
     case "s":
       return this._asNumber(d.seconds(), length);
+    case "S":
+      return this._asNumber(d.milliseconds(), length);
   }
   throw "Unexpected pattern letter: " + letter;
 }

@@ -153,8 +153,12 @@ describe("simple date format with default locale", function () {
     expect(new sdf.SimpleDateFormat("s").format(moment([2017, 4, 20, 17, 16, 59, 0]))).toBe("59");
   });
 
+  it("formats millisecond in second", function() {
+    expect(new sdf.SimpleDateFormat("S").format(moment([2017, 4, 20, 17, 16, 59, 123]))).toBe("123");
+  });
+
   it("combines patterns", function() {
-    var d = moment([2001, 6, 4, 12, 8, 56]);
+    var d = moment([2001, 6, 4, 12, 8, 56, 235]);
     expect(new sdf.SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(d)).toBe("2001.07.04 AD at 12:08:56 PDT");
     expect(new sdf.SimpleDateFormat("EEE, MMM d, ''yy").format(d)).toBe("Wed, Jul 4, '01");
     expect(new sdf.SimpleDateFormat("h:mm a").format(d)).toBe("12:08 PM");

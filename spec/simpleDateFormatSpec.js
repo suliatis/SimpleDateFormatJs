@@ -146,11 +146,11 @@ describe("simple date format with default locale", function () {
   });
 
   it("formats minute in hour", function() {
-    expect(new sdf.SimpleDateFormat("m")).format(moment([2017, 4, 20, 17, 14, 0, 0])).toBe("14");
+    expect(new sdf.SimpleDateFormat("m").format(moment([2017, 4, 20, 17, 14, 0, 0]))).toBe("14");
   });
 
   it("formats second in minute", function() {
-    expext(new sdf.SimpleDateForamt("s").format(moment([2017, 4, 20, 17, 16, 59, 0]))).toBe("59");
+    expect(new sdf.SimpleDateFormat("s").format(moment([2017, 4, 20, 17, 16, 59, 0]))).toBe("59");
   });
 
   it("combines patterns", function() {

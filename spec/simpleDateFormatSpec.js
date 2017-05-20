@@ -136,14 +136,22 @@ describe("simple date format with default locale", function () {
     expect(new sdf.SimpleDateFormat("a").format(moment([2017, 4, 20, 10, 30, 0, 0]))).toBe("AM");
   });
 
-  it("formats hours in day", function() {
+  it("formats hour in day", function() {
     expect(new sdf.SimpleDateFormat("H").format(moment([2017, 4, 20, 0, 0, 0, 0]))).toBe("0");
     expect(new sdf.SimpleDateFormat("H").format(moment([2017, 4, 20, 23, 0, 0, 0]))).toBe("23");
     expect(new sdf.SimpleDateFormat("k").format(moment([2017, 4, 20, 0, 0, 0, 0]))).toBe("24");
     expect(new sdf.SimpleDateFormat("K").format(moment([2017, 4, 20, 0, 0, 0, 0]))).toBe("0");
     expect(new sdf.SimpleDateFormat("K").format(moment([2017, 4, 20, 23, 0, 0, 0]))).toBe("11");
     expect(new sdf.SimpleDateFormat("h").format(moment([2017, 4, 20, 0, 0, 0, 0]))).toBe("12");
-  }); 
+  });
+
+  it("formats minute in hour", function() {
+    expect(new sdf.SimpleDateFormat("m")).format(moment([2017, 4, 20, 17, 14, 0, 0])).toBe("14");
+  });
+
+  it("formats second in minute", function() {
+    expext(new sdf.SimpleDateForamt("s").format(moment([2017, 4, 20, 17, 16, 59, 0]))).toBe("59");
+  });
 
   it("combines patterns", function() {
     var d = moment([2001, 6, 4, 12, 8, 56]);

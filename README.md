@@ -20,6 +20,14 @@ The list of supported patterns is not complete yet.
 - F: Day of week in month
 - E: Day name in week
 - u: Day number of week (1 = Monday, ..., 7 = Sunday)
+- a: Am/pm marker
+- H: Hour in day
+- k: Hour in day (1-24)
+- K: Hour in am/pm (0-11)
+- h: Hour in am/pm (1-12)
+- m: Minute in hour
+- s: Second in minute
+- S: Millisecond
 
 To read more about the patterns, please visit the offical documentation of [`SimpleDateFormat`](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html).
 

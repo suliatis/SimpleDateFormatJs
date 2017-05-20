@@ -102,11 +102,11 @@ SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
     case "H":
       return this._asNumber(d.hours(), length);
     case "k":
-      return this._asText(d.hours() || 24, length);
+      return this._asNumber(d.hours() || 24, length);
     case "K":
-      return this._asText(d.hours() % 12, length);
+      return this._asNumber(d.hours() % 12, length);
     case "h":
-      return this._asText((d.hours() % 12) || 12, length);
+      return this._asNumber((d.hours() % 12) || 12, length);
     case "m":
       return this._asNumber(d.minutes(), length);
     case "s":

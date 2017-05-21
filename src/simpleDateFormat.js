@@ -3,13 +3,14 @@ var moment = require('moment');
 var SimpleDateFormat = function(pattern) {
   if (pattern) this.pattern = pattern;
   else this.pattern = "y-MM-dd";
-  this.regex = /('.*')|(G+|y+|Y+|M+|L+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
+  this.regex = /('.*')|(G+|y+|Y+|M+|L+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+|Z+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
   
   this.TYPES = {
     TEXT: "TEXT",
     NUMBER: "NUMBER",
     YEAR: "YEAR",
-    MONTH: "MONTH"
+    MONTH: "MONTH",
+    RFCTZ: "RFCTZ"
   };
 };
 
@@ -109,6 +110,8 @@ SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
       return this._asNumber(d.seconds(), length);
     case "S":
       return this._asNumber(d.milliseconds(), length);
+    case "Z":
+      return this._asRfcTz(d.utcOffset());
   }
   throw "Unexpected pattern letter: " + letter;
 }
@@ -129,6 +132,10 @@ SimpleDateFormat.prototype._asYear = function(v, l) {
   return { value: v, length: l, type: this.TYPES.YEAR };
 }
 
+SimpleDateFormat.prototype._asRfcTz = function(v) {
+  return { value: v, type: this.TYPES.RFCTZ }
+}
+
 SimpleDateFormat.prototype._formatField = function(field) {
   switch (field.type) {
     case this.TYPES.YEAR:
@@ -142,6 +149,12 @@ SimpleDateFormat.prototype._formatField = function(field) {
       return this._padWithZeroes("" + field.value, field.length);
     case this.TYPES.TEXT: 
       return field.value;
+    case this.TYPES.RFCTZ:
+      var sign = "+";
+      if (field.value < 0) sign = "-";
+      var hours = this._padWithZeroes("" + Math.abs(Math.floor(field.value / 60)), 2);
+      var minutes = this._padWithZeroes("" + Math.abs(field.value % 60), 2);
+      return sign + hours + minutes;
   }
   throw "Unexpected field type: " + field.type;
 }

@@ -157,6 +157,12 @@ describe("simple date format with default locale", function () {
     expect(new sdf.SimpleDateFormat("S").format(moment([2017, 4, 20, 17, 16, 59, 123]))).toBe("123");
   });
 
+  it("formats rfc timezone", function() {
+    expect(new sdf.SimpleDateFormat("Z").format(moment().utcOffset(-4))).toBe("-0400");
+    expect(new sdf.SimpleDateFormat("Z").format(moment().utcOffset(525))).toBe("+0845");
+    expect(new sdf.SimpleDateFormat("Z").format(moment().utcOffset(11))).toBe("+1100");
+  });
+
   it("combines patterns", function() {
     var d = moment([2001, 6, 4, 12, 8, 56, 235]);
     expect(new sdf.SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(d)).toBe("2001.07.04 AD at 12:08:56 PDT");

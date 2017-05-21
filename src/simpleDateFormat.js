@@ -3,14 +3,15 @@ var moment = require('moment');
 var SimpleDateFormat = function(pattern) {
   if (pattern) this.pattern = pattern;
   else this.pattern = "y-MM-dd";
-  this.regex = /('.*')|(G+|y+|Y+|M+|L+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+|Z+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
+  this.regex = /('.*')|(G+|y+|Y+|M+|L+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+|Z+|X+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
   
   this.TYPES = {
     TEXT: "TEXT",
     NUMBER: "NUMBER",
     YEAR: "YEAR",
     MONTH: "MONTH",
-    RFCTZ: "RFCTZ"
+    RFCTZ: "RFCTZ",
+    ISOTZ: "ISOTZ"
   };
 };
 
@@ -112,6 +113,8 @@ SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
       return this._asNumber(d.milliseconds(), length);
     case "Z":
       return this._asRfcTz(d.utcOffset());
+    case "X":
+      return this._asIsoTz(d.utcOffset(), length);
   }
   throw "Unexpected pattern letter: " + letter;
 }
@@ -136,6 +139,10 @@ SimpleDateFormat.prototype._asRfcTz = function(v) {
   return { value: v, type: this.TYPES.RFCTZ }
 }
 
+SimpleDateFormat.prototype._asIsoTz = function(v, l) {
+  return { value: v, length: l, type: this.TYPES.ISOTZ }
+}
+
 SimpleDateFormat.prototype._formatField = function(field) {
   switch (field.type) {
     case this.TYPES.YEAR:
@@ -155,6 +162,14 @@ SimpleDateFormat.prototype._formatField = function(field) {
       var hours = this._padWithZeroes("" + Math.abs(Math.floor(field.value / 60)), 2);
       var minutes = this._padWithZeroes("" + Math.abs(field.value % 60), 2);
       return sign + hours + minutes;
+    case this.TYPES.ISOTZ:
+       var sign = "+";
+      if (field.value < 0) sign = "-";
+      var hours = this._padWithZeroes("" + Math.abs(Math.floor(field.value / 60)), 2);
+      var minutes = this._padWithZeroes("" + Math.abs(field.value % 60), 2);
+      if (field.length === 1) return sign + hours;
+      else if (field.length === 2) return sign + hours + minutes;
+      else return sign + hours + ":" + minutes;
   }
   throw "Unexpected field type: " + field.type;
 }

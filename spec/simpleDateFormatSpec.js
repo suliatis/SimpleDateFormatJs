@@ -162,9 +162,17 @@ describe("simple date format with default locale", function () {
     expect(new sdf.SimpleDateFormat("Z").format(moment().utcOffset(525))).toBe("+0845");
     expect(new sdf.SimpleDateFormat("Z").format(moment().utcOffset(11))).toBe("+1100");
   });
+  
+  it("formats iso timezone", function() {
+    expect(new sdf.SimpleDateFormat("XXX").format(moment().utcOffset(-4))).toBe("-04:00");
+    expect(new sdf.SimpleDateFormat("XX").format(moment().utcOffset(-4))).toBe("-0400");
+    expect(new sdf.SimpleDateFormat("X").format(moment().utcOffset(-4))).toBe("-04");
+    expect(new sdf.SimpleDateFormat("XXX").format(moment().utcOffset(525))).toBe("+08:45");
+    expect(new sdf.SimpleDateFormat("XXX").format(moment().utcOffset(11))).toBe("+11:00");
+  });
 
   it("combines patterns", function() {
-    var d = moment([2001, 6, 4, 12, 8, 56, 235]);
+    var d = moment.utc([2001, 6, 4, 19, 8, 56, 235]).utcOffset(-7);
     expect(new sdf.SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(d)).toBe("2001.07.04 AD at 12:08:56 PDT");
     expect(new sdf.SimpleDateFormat("EEE, MMM d, ''yy").format(d)).toBe("Wed, Jul 4, '01");
     expect(new sdf.SimpleDateFormat("h:mm a").format(d)).toBe("12:08 PM");

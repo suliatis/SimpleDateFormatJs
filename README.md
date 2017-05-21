@@ -28,6 +28,8 @@ The list of supported patterns is not complete yet.
 - m: Minute in hour
 - s: Second in minute
 - S: Millisecond
+- Z: Time zone (RFC 822)
+- X: Time zone (ISO 8601)
 
 To read more about the patterns, please visit the offical documentation of [`SimpleDateFormat`](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html).
 

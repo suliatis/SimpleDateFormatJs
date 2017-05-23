@@ -35,10 +35,10 @@ To read more about the patterns, please visit the offical documentation of [`Sim
 
 ## Examples
 
-If no pattern defined in constructor it uses ISO date pattern. **Warning**: it is not identical the original behavior and it is just a temporary solution.
+If no pattern defined in constructor it use pattern for default locale.
 
 ```javascript
-new SimpleDateFormat().format(new Date(2017, 4, 18)); //it prints 2017-05-18
+new SimpleDateFormat().format(new Date(2017, 4, 18)); //it prints 5/18/17 12:00 PM
 ```
 
 You can apply a new pattern on existing date formatters.

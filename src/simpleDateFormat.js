@@ -1,8 +1,7 @@
 var moment = require('moment');
 
 var SimpleDateFormat = function(pattern) {
-  if (pattern) this.pattern = pattern;
-  
+  this.pattern = pattern;
   this.regex = /('.*')|(G+|y+|Y+|M+|L+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+|Z+|X+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
   
   this.TYPES = {
@@ -16,7 +15,6 @@ var SimpleDateFormat = function(pattern) {
 }
 
 SimpleDateFormat.prototype.applyPattern = function(pattern) {
-  if (!pattern) throw "Pattern must be defined!";
   this.pattern = pattern;
 }
 
@@ -24,9 +22,7 @@ SimpleDateFormat.prototype.format = function(date) {
   var formattedString = "";
   var d = moment(date);
 
-  var p;
-  if (this.pattern) p = this.pattern;
-  else p = this._defaultPatternsByLocale[d.locale()];
+  var p = this._or(this.pattern, this._defaultPatternsByLocale[d.locale()]);
 
   var matches;
   while((matches = this.regex.exec(p))) {
@@ -48,6 +44,11 @@ SimpleDateFormat.prototype.format = function(date) {
     p = p.substr(matches.index + matches[0].length);
   } 
   return formattedString;
+}
+
+SimpleDateFormat.prototype._or = function(a, b) {
+  if (a) return a;
+  else return b;
 }
 
 SimpleDateFormat.prototype.weekInMonth = function(d) {

@@ -82,9 +82,9 @@ SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
     case "Y":
       return this._asYear(d.weekYear(), length);
     case "M":
-      return this._asMonth(d.month(), length);
+      return this._asMonth(d.month(), letter, length);
     case "L":
-      return this._asMonth(d.month(), length);
+      return this._asMonth(d.month(), letter, length);
     case "w":
       return this._asNumber(d.week(), length);
     case "W": 
@@ -132,8 +132,8 @@ SimpleDateFormat.prototype._asNumber = function(v, l) {
   return { value: v, length: l, type: this.TYPES.NUMBER };
 }
 
-SimpleDateFormat.prototype._asMonth = function(v, l) {
-  return { value: v, length: l, type: this.TYPES.MONTH };
+SimpleDateFormat.prototype._asMonth = function(v, c, l) {
+  return { value: v, letter: c, length: l, type: this.TYPES.MONTH };
 }
 
 SimpleDateFormat.prototype._asYear = function(v, l) {
@@ -155,8 +155,8 @@ SimpleDateFormat.prototype._formatField = function(field) {
       else return this._padWithZeroes("" + field.value, field.length);
     case this.TYPES.MONTH:
       if (field.length <= 2) return this._padWithZeroes("" + (field.value + 1), field.length);
-      else if (field.length === 3) return moment.monthsShort()[field.value];
-      else return moment.months()[field.value];
+      else if (field.length === 3) return this._monthsShort(field.value, field.letter);
+      else return this._months(field.value, field.letter);
     case this.TYPES.NUMBER:
       return this._padWithZeroes("" + field.value, field.length);
     case this.TYPES.TEXT: 
@@ -183,6 +183,18 @@ SimpleDateFormat.prototype._padWithZeroes = function(str, length) {
   var s = str;
   while(s.length < length) s = "0" + s;
   return s;
+}
+
+SimpleDateFormat.prototype._months = function(value, letter) {
+  if (letter === "M") return moment.months()[value];
+  else if (letter === "L") return moment.months("-MMM-")[value];
+  else throw "Unknown letter to format month: " + letter;
+}
+
+SimpleDateFormat.prototype._monthsShort = function(value, letter) {
+  if (letter === "M") return moment.monthsShort()[value];
+  else if (letter === "L") return moment.monthsShort("-MMM-")[value];
+  else throw "Unknown letter to format short month: " + letter;
 }
 
 SimpleDateFormat.prototype._defaultPatternsByLocale = {

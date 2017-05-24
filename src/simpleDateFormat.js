@@ -51,25 +51,25 @@ SimpleDateFormat.prototype._or = function(a, b) {
   else return b;
 }
 
-SimpleDateFormat.prototype.weekInMonth = function(d) {
+SimpleDateFormat.prototype._weekInMonth = function(d) {
   var first = moment(d).startOf("month").week();
   var current = d.week();
   if (first > current) first = first - moment(d).startOf("month").weeksInYear();
   return current - first + 1;
 }
 
-SimpleDateFormat.prototype.dayOfWeekInMonth = function(d) {
+SimpleDateFormat.prototype._dayOfWeekInMonth = function(d) {
   var c = 1;
   var m = moment(d);
   while ((m = moment(m).date(m.date() - 7)).month() === d.month()) c++;
   return c;
 }
 
-SimpleDateFormat.prototype.dayNameInWeek = function(d) {
+SimpleDateFormat.prototype._dayNameInWeek = function(d) {
   return moment.weekdays()[d.weekday()];
 }
 
-SimpleDateFormat.prototype.shortDayNameInWeek = function(d) {
+SimpleDateFormat.prototype._shortDayNameInWeek = function(d) {
   return moment.weekdaysShort()[d.weekday()];
 }
 
@@ -88,16 +88,16 @@ SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
     case "w":
       return this._asNumber(d.week(), length);
     case "W": 
-      return this._asNumber(this.weekInMonth(d), length);
+      return this._asNumber(this._weekInMonth(d), length);
     case "D":
       return this._asNumber(d.dayOfYear(), length);
     case "d":
       return this._asNumber(d.date(), length);
     case "F":
-      return this._asNumber(this.dayOfWeekInMonth(d), length);
+      return this._asNumber(this._dayOfWeekInMonth(d), length);
     case "E":
-      if (length <= 3) return this._asText(this.shortDayNameInWeek(d));
-      else return this._asText(this.dayNameInWeek(d));
+      if (length <= 3) return this._asText(this._shortDayNameInWeek(d));
+      else return this._asText(this._dayNameInWeek(d));
     case "u":
       return this._asNumber(d.isoWeekday(), length);
     case "a":

@@ -66,11 +66,11 @@ SimpleDateFormat.prototype._dayOfWeekInMonth = function(d) {
 }
 
 SimpleDateFormat.prototype._dayNameInWeek = function(d) {
-  return moment.weekdays()[d.weekday()];
+  return d.localeData().weekdays(d);
 }
 
 SimpleDateFormat.prototype._shortDayNameInWeek = function(d) {
-  return moment.weekdaysShort()[d.weekday()];
+  return d.localeData().weekdaysShort(d);
 }
 
 SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
@@ -82,9 +82,9 @@ SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
     case "Y":
       return this._asYear(d.weekYear(), length);
     case "M":
-      return this._asMonth(d.month(), letter, length);
+      return this._asMonth(d.month(), letter, length, d.localeData());
     case "L":
-      return this._asMonth(d.month(), letter, length);
+      return this._asMonth(d.month(), letter, length, d.localeData());
     case "w":
       return this._asNumber(d.week(), length);
     case "W": 
@@ -101,7 +101,7 @@ SimpleDateFormat.prototype._fieldWithType = function(d, letter, length) {
     case "u":
       return this._asNumber(d.isoWeekday(), length);
     case "a":
-      return this._asText(moment.localeData().meridiem(d.hours(), d.minutes()));
+      return this._asText(d.localeData().meridiem(d.hours(), d.minutes()));
     case "H":
       return this._asNumber(d.hours(), length);
     case "k":
@@ -132,8 +132,8 @@ SimpleDateFormat.prototype._asNumber = function(v, l) {
   return { value: v, length: l, type: this.TYPES.NUMBER };
 }
 
-SimpleDateFormat.prototype._asMonth = function(v, c, l) {
-  return { value: v, letter: c, length: l, type: this.TYPES.MONTH };
+SimpleDateFormat.prototype._asMonth = function(v, c, l, d) {
+  return { value: v, letter: c, length: l, type: this.TYPES.MONTH, localeData: d };
 }
 
 SimpleDateFormat.prototype._asYear = function(v, l) {
@@ -155,8 +155,8 @@ SimpleDateFormat.prototype._formatField = function(field) {
       else return this._padWithZeroes("" + field.value, field.length);
     case this.TYPES.MONTH:
       if (field.length <= 2) return this._padWithZeroes("" + (field.value + 1), field.length);
-      else if (field.length === 3) return this._monthsShort(field.value, field.letter);
-      else return this._months(field.value, field.letter);
+      else if (field.length === 3) return this._monthsShort(field.value, field.letter, field.localeData);
+      else return this._months(field.value, field.letter, field.localeData);
     case this.TYPES.NUMBER:
       return this._padWithZeroes("" + field.value, field.length);
     case this.TYPES.TEXT: 
@@ -185,16 +185,12 @@ SimpleDateFormat.prototype._padWithZeroes = function(str, length) {
   return s;
 }
 
-SimpleDateFormat.prototype._months = function(value, letter) {
-  if (letter === "M") return moment.months()[value];
-  else if (letter === "L") return moment.months("-MMM-")[value];
-  else throw "Unknown letter to format month: " + letter;
+SimpleDateFormat.prototype._months = function(value, letter, localeData) {
+  return localeData.months(moment().month(value));
 }
 
-SimpleDateFormat.prototype._monthsShort = function(value, letter) {
-  if (letter === "M") return moment.monthsShort()[value];
-  else if (letter === "L") return moment.monthsShort("-MMM-")[value];
-  else throw "Unknown letter to format short month: " + letter;
+SimpleDateFormat.prototype._monthsShort = function(value, letter, localeData) {
+  return localeData.monthsShort(moment().month(value));
 }
 
 SimpleDateFormat.prototype._defaultPatternsByLocale = {

@@ -12,7 +12,7 @@ The list of supported patterns is not complete yet.
 - y: Year	Year
 - Y: Week year
 - M: Month in year (context sensitive)
-- L: Month in year (standalone form)
+- L: Month in year (standalone form) **warning:** currently it works like the context sensitive format
 - w: Week in year
 - W: Week in month
 - D: Day in year
